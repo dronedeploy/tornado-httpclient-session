@@ -3,7 +3,10 @@ try:
 except ImportError:
     from urllib.parse import urlparse, urlunparse
 
-from tornado.httputil import _normalized_headers
+# from tornado.httputil import _normalized_headers
+from tornado.httputil import _normalize_header
+
+
 
 
 class MockRequest(object):
@@ -67,7 +70,8 @@ class MockResponse(object):
         return self
 
     def getallmatchingheaders(self, name):
-        norm_name = _normalized_headers[name]
+        # norm_name = _normalized_headers[name]
+        norm_name = _normalize_header(name)
 
         return ['{0}: {1}'.format(norm_name, value)
                 for value in self._response.headers.get_list(name)]
